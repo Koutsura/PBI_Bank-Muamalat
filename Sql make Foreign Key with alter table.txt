@@ -1,0 +1,15 @@
+ALTER TABLE orders
+ADD CONSTRAINT fk_orders_customer
+FOREIGN KEY (CustomerID)
+REFERENCES customers(CustomerID);
+
+ALTER TABLE orders
+ADD CONSTRAINT fk_products_prodnumber
+FOREIGN KEY (ProdNumber)
+REFERENCES products (ProdNumber);
+
+
+ALTER TABLE products
+ADD CONSTRAINT fk_products_category
+FOREIGN KEY (Category)
+REFERENCES product_category(CategoryID);

@@ -1,0 +1,42 @@
+CREATE TABLE master (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    order_date VARCHAR(255),
+    category_name VARCHAR(255),
+    product_name VARCHAR(255),
+    product_price DECIMAL(10, 2),
+    order_qty INT,
+    total_sales DECIMAL(10, 2), 
+    cust_email VARCHAR(255),
+    cust_city VARCHAR(255)
+);
+
+SELECT
+    id AS `row`,
+    order_date,
+    category_name,
+    product_name,
+    product_price,
+    order_qty,
+   (order_qty * product_price) AS total_sales, 
+    cust_email,
+    cust_city
+FROM 
+    master
+ORDER BY 
+    order_date ASC;
+
+
+INSERT INTO master (order_date, category_name, product_name, product_price, order_qty, total_sales, cust_email, cust_city)
+SELECT 
+    o.Date AS order_date,
+    pc.CategoryName AS category_name,
+    p.ProdName AS product_name,
+    p.Price AS product_price,
+    o.Quantity AS order_qty,
+    (o.Quantity * p.Price) AS total_sales,
+    c.CustomerEmail AS cust_email,
+    c.CustomerCity AS cust_city
+FROM orders o
+JOIN customers c ON o.CustomerID = c.CustomerID
+JOIN products p ON o.ProdNumber = p.ProdNumber
+JOIN product_category pc ON p.Category = pc.CategoryID;
